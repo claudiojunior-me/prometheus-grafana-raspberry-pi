@@ -15,7 +15,7 @@ services:
             - '--storage.tsdb.retention.time=1y'
             - '--web.enable-lifecycle'
         ports:
-            - "9090:9090"
+            - "8090:9090"
         links:
             - node-exporter:node-exporter
         restart: on-failure
