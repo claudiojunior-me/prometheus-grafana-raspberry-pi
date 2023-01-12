@@ -51,19 +51,22 @@ services:
             - "8093:9093"
         restart: on-failure
     cadvisor:
-        image: braingamer/cadvisor-arm:latest
-        container_name: monitoring_cadvisor
-        privileged: true
+        image: zcube/cadvisor:latest
+        container_name: cadvisor
+        command:
+            - "--docker_only=true"
+            - "--housekeeping_interval=30s"
+            - "--disable_metrics=accelerator,cpu_topology,disk,memory_numa,tcp,udp,percpu,sched,process,hugetlb,referenced_memory,resctrl,cpuset,advtcp,memory_numa"
         restart: unless-stopped
         volumes:
             - /:/rootfs:ro
-            - /var/run:/var/run:rw
+            - /var/run:/var/run:ro
             - /sys:/sys:ro
             - /var/lib/docker/:/var/lib/docker:ro
+            - /dev/disk/:/dev/disk:ro
+            - /etc/machine-id:/etc/machine-id:ro
         devices:
             - /dev/kmsg
-        ports:
-            - "8094:8080"
 
 volumes:
     prometheus_data: {}
