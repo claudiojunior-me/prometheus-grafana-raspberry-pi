@@ -14,10 +14,11 @@ services:
             - '--web.console.templates=/etc/prometheus/consoles'
             - '--storage.tsdb.retention.time=1y'
             - '--web.enable-lifecycle'
-        ports:
-            - "8090:9090"
+        # ports:
+        #     - "8090:9090"
+        expose:
+            - 9090
         restart: on-failure
-        network_mode: "host"
     node-exporter:
         container_name: node-exporter
         image: prom/node-exporter-linux-armv7
